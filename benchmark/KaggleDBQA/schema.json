@@ -1,0 +1,34 @@
+[
+    {
+        "db_id": "WorldSoccerDataBase",
+        "schema": "CREATE TABLE betfront (\n    YEAR INT,\n    DATETIME DATETIME,\n    COUNTRY TEXT,\n    COMPETION TEXT,\n    MATCH TEXT,\n    HOME_OPENING FLOAT,\n    DRAW_OPENING FLOAT,\n    AWAY_OPENING FLOAT,\n    HOME_CLOSING FLOAT,\n    DRAW_CLOSING FLOAT,\n    AWAY_CLOSING FLOAT\n);\n\nCREATE TABLE football_data (\n    Season TEXT,\n    Datetime DATETIME,\n    Div TEXT,\n    Country TEXT,\n    League TEXT,\n    Referee TEXT,\n    HomeTeam TEXT,\n    AwayTeam TEXT,\n    FTHG INT,\n    FTAG INT,\n    FTR TEXT,\n    HTHG INT,\n    HTAG INT,\n    HTR TEXT,\n    PSH FLOAT,\n    PSD FLOAT,\n    PSA FLOAT,\n    B365H FLOAT,\n    B365D FLOAT,\n    B365A FLOAT,\n    LBH FLOAT,\n    LBD FLOAT,\n    LBA FLOAT,\n    BWH FLOAT,\n    BWD FLOAT,\n    BWA FLOAT\n);"
+    },
+    {
+        "db_id": "Pesticide",
+        "schema": "CREATE TABLE sampledata15 (\n    sample_pk INT,\n    state TEXT,\n    year TEXT,\n    month TEXT,\n    day TEXT,\n    site TEXT,\n    commod TEXT,\n    source_id TEXT,\n    variety TEXT,\n    origin TEXT,\n    country TEXT,\n    disttype TEXT,\n    commtype TEXT,\n    claim TEXT,\n    quantity INT,\n    growst TEXT,\n    packst TEXT,\n    distst TEXT\n);\n\nCREATE TABLE resultsdata15 (\n    sample_pk INT,\n    commod TEXT,\n    commtype TEXT,\n    lab TEXT,\n    pestcode TEXT,\n    testclass TEXT,\n    concen INT,\n    lod INT,\n    conunit TEXT,\n    confmethod TEXT,\n    confmethod2 TEXT,\n    annotate TEXT,\n    quantitate TEXT,\n    mean TEXT,\n    extract TEXT,\n    determin TEXT\n);"
+    },
+    {
+        "db_id": "USWildFires",
+        "schema": "CREATE TABLE Fires (\n    FIRE_YEAR INT,\n    DISCOVERY_DATE DATETIME,\n    DISCOVERY_DOY INT,\n    DISCOVERY_TIME TIME,\n    STAT_CAUSE_CODE TEXT,\n    STAT_CAUSE_DESCR TEXT,\n    CONT_DATE DATETIME,\n    CONT_DOY INT,\n    CONT_TIME TIME,\n    FIRE_SIZE FLOAT,\n    FIRE_SIZE_CLASS TEXT,\n    LATITUDE FLOAT,\n    LONGITUDE FLOAT,\n    OWNER_CODE TEXT,\n    OWNER_DESCR TEXT,\n    STATE TEXT,\n    COUNTY TEXT,\n    FIPS_CODE INT,\n    FIPS_NAME TEXT\n);"
+    },
+    {
+        "db_id": "GeoNuclearData",
+        "schema": "CREATE TABLE nuclear_power_plants (\n    Id TEXT,\n    Name TEXT,\n    Latitude FLOAT,\n    Longitude FLOAT,\n    Country TEXT,\n    Status TEXT,\n    ReactorType TEXT,\n    ReactorModel TEXT,\n    ConstructionStartAt DATETIME,\n    OperationalFrom DATETIME,\n    OperationalTo DATETIME,\n    Capacity FLOAT,\n    LastUpdatedAt DATETIME,\n    Source TEXT\n);"
+    },
+    {
+        "db_id": "WhatCDHipHop",
+        "schema": "CREATE TABLE torrents (\n    groupName TEXT,\n    totalSnatched INT,\n    artist TEXT,\n    groupYear INT,\n    releaseType TEXT,\n    groupId INT,\n    id INT\n);\n\nCREATE TABLE tags (\n    index INT,\n    id INT,\n    tag TEXT,\n    FOREIGN KEY (id) REFERENCES torrents(id)\n);"
+    },
+    {
+        "db_id": "TheHistoryofBaseball",
+        "schema": "CREATE TABLE hall_of_fame (\n    player_id TEXT,\n    yearid INT,\n    votedby TEXT,\n    ballots INT,\n    needed INT,\n    votes INT,\n    inducted TEXT,\n    category TEXT,\n    needed_note TEXT\n);\n\nCREATE TABLE player_award (\n    player_id TEXT,\n    award_id TEXT,\n    year INT,\n    league_id TEXT,\n    tie TEXT,\n    notes TEXT\n);\n\nCREATE TABLE player_award_vote (\n    award_id TEXT,\n    year INT,\n    league_id TEXT,\n    player_id TEXT,\n    points_won INT,\n    points_max INT,\n    votes_first INT\n);\n\nCREATE TABLE salary (\n    year INT,\n    team_id TEXT,\n    league_id TEXT,\n    player_id TEXT,\n    salary FLOAT\n);\n\nCREATE TABLE player (\n    player_id TEXT,\n    birth_year INT,\n    birth_month INT,\n    birth_day INT,\n    birth_country TEXT,\n    birth_state TEXT,\n    birth_city TEXT,\n    death_year INT,\n    death_month INT,\n    death_day INT,\n    death_country TEXT,\n    death_state TEXT,\n    death_city TEXT,\n    name_first TEXT,\n    name_last TEXT,\n    name_given TEXT,\n    weight FLOAT\n);"
+    },
+    {
+        "db_id": "StudentMathScore",
+        "schema": "CREATE TABLE FINREV_FED_17 (\n    state_code INT,\n    idcensus INT,\n    school_district TEXT,\n    nces_id INT,\n    yr_data INT,\n    t_fed_rev FLOAT,\n    c14 FLOAT,\n    c25 FLOAT\n);\n\nCREATE TABLE NDECoreExcel_Math_Grade8 (\n    year INT,\n    state TEXT,\n    all_students INT,\n    average_scale_score FLOAT\n);\n\nCREATE TABLE FINREV_FED_KEY_17 (\n    State_Code INT,\n    State TEXT,\n    #_Records INT\n);"
+    },
+    {
+        "db_id": "GreaterManchesterCrime",
+        "schema": "CREATE TABLE GreaterManchesterCrime (\n    CrimeID TEXT PRIMARY KEY,\n    CrimeTS DATETIME,\n    Location TEXT,\n    LSOA TEXT,\n    Type TEXT,\n    Outcome TEXT\n);"
+    }
+]

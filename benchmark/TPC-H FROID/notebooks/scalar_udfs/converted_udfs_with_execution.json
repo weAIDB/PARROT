@@ -1,0 +1,178 @@
+[
+    {
+        "filename": "avg_actbal.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION avg_actbal() RETURNS DECIMAL(12,2)\nAS\nBEGIN\n    RETURN (\n        SELECT AVG(C_ACCTBAL)\n        FROM CUSTOMER\n        WHERE C_ACCTBAL > 0.00\n        AND LEFT(C_PHONE, 2) IN ('13', '31', '23', '29', '30', '18', '17')\n    );\nEND;",
+        "sqlglot converted sql udf": "CREATE FUNCTION avg_actbal() RETURNS DECIMAL(12, 2) AS BEGIN RETURN (SELECT AVG(C_ACCTBAL) FROM CUSTOMER WHERE C_ACCTBAL > 0.00 AND LEFT(CAST(C_PHONE AS TEXT), 2) IN ('13', '31', '23', '29', '30', '18', '17'));\nEND",
+        "sqlglot error": "",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION avg_actbal() RETURNS DECIMAL(12,2) AS $$\nBEGIN\n    RETURN (\n        SELECT AVG(C_ACCTBAL)\n        FROM CUSTOMER\n        WHERE C_ACCTBAL > 0.00\n        AND SUBSTRING(C_PHONE, 1, 2) IN ('13', '31', '23', '29', '30', '18', '17')\n    );\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "syntax error at or near \"BEGIN\"\nLINE 1: ...E FUNCTION avg_actbal() RETURNS DECIMAL(12, 2) AS BEGIN RETU...\n                                                             ^\n",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "checkDate.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION checkDate(\n    @d DATE,\n    @odate DATE,\n    @shipdate DATE\n) RETURNS INT\nAS\nBEGIN\n    IF @odate < @d AND @shipdate > @d\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 11, Col: 9.\n  ate DATE\n) RETURNS INT\nAS\nBEGIN\n    IF @odate < @d AND @shipdate > @d\n        RETURN 1;\n\n    RETURN \u001b[4m0\u001b[0m;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION checkDate(\n    d VARCHAR(10),\n    odate DATE,\n    shipdate DATE\n) RETURNS INT AS $$\nBEGIN\n    IF odate < d::DATE AND shipdate > d::DATE THEN\n        RETURN 1;\n    END IF;\n    RETURN 0;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "discount_price.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION discount_price(\n    @extprice DECIMAL(12,2),\n    @disc DECIMAL(12,2)\n) RETURNS DECIMAL(12,2)\nAS\nBEGIN\n    RETURN @extprice * (1 - @disc);\nEND;",
+        "sqlglot converted sql udf": "CREATE FUNCTION discount_price($extprice DECIMAL(12, 2), $disc DECIMAL(12, 2)) RETURNS DECIMAL(12, 2) AS BEGIN RETURN $extprice * (1 - $disc);\nEND",
+        "sqlglot error": "",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION discount_price(\n    extprice DECIMAL(12,2),\n    disc DECIMAL(12,2)\n) RETURNS DECIMAL(12,2) AS $$\nDECLARE\n    result DECIMAL(12,2);\nBEGIN\n    result := extprice * (1 - disc);\n    RETURN result;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "syntax error at or near \"$\"\nLINE 1: CREATE FUNCTION discount_price($extprice DECIMAL(12, 2), $di...\n                                       ^\n",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "discount_taxprice.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION discount_taxprice(\n    @extprice DECIMAL(12,2),\n    @disc DECIMAL(12,2),\n    @tax DECIMAL(12,2)\n) RETURNS DECIMAL(12,2)\nAS\nBEGIN\n    RETURN dbo.discount_price(@extprice, @disc) * (1 + @tax);\nEND;",
+        "sqlglot converted sql udf": "CREATE FUNCTION discount_taxprice($extprice DECIMAL(12, 2), $disc DECIMAL(12, 2), $tax DECIMAL(12, 2)) RETURNS DECIMAL(12, 2) AS BEGIN RETURN dbo.discount_price($extprice, $disc) * (1 + $tax);\nEND",
+        "sqlglot error": "",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION discount_taxprice(\n    extprice DECIMAL(12,2),\n    disc DECIMAL(12,2),\n    tax DECIMAL(12,2)\n) RETURNS DECIMAL(12,2) AS $$\nBEGIN\n    RETURN discount_price(extprice, disc) * (1 + tax);\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "syntax error at or near \"$\"\nLINE 1: CREATE FUNCTION discount_taxprice($extprice DECIMAL(12, 2), ...\n                                          ^\n",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "isShippedBefore.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION isShippedBefore(\n    @shipdate DATE,\n    @duration INT,\n    @stdatechar VARCHAR(10)\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @stdate DATE = CAST(@stdatechar AS DATE);\n    DECLARE @newdate DATE = DATEADD(DAY, @duration, @stdate);\n\n    IF @shipdate > @newdate\n        RETURN 0;\n\n    RETURN 1;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 12, Col: 9.\n  CLARE @newdate DATE = DATEADD(DAY, @duration, @stdate);\n\n    IF @shipdate > @newdate\n        RETURN \u001b[4m0\u001b[0m;\n\n    RETURN 1;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION isShippedBefore(\n    shipdate DATE,\n    duration INT,\n    stdatechar VARCHAR(10)\n) RETURNS INT AS $$\nDECLARE\n    stdate DATE := stdatechar::DATE;\n    newdate DATE := stdate + (duration || ' days')::INTERVAL;\nBEGIN\n    IF shipdate > newdate THEN\n        RETURN 0;\n    END IF;\n    RETURN 1;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "line_count.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION line_count(\n    @oprio CHAR(15),\n    @mode VARCHAR(4)\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @val INT = 0;\n\n    IF @mode = 'high'\n    BEGIN\n        IF @oprio IN ('1-URGENT', '2-HIGH')\n            SET @val = 1;\n    END\n    ELSE IF @mode = 'low'\n    BEGIN\n        IF @oprio IN ('1-URGENT', '2-HIGH')\n            SET @val = 1;\n    END;\n\n    RETURN @val;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Required keyword: 'true' missing for <class 'sqlglot.expressions.If'>. Line 10, Col: 6.\n  ),\n    @mode VARCHAR(4)\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @val INT = 0;\n\n    IF @mode = 'high'\n    \u001b[4mBEGIN\u001b[0m\n        IF @oprio IN ('1-URGENT', '2-HIGH')\n            SET @val = 1;\n    END\n    ELSE IF @mode = '",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION line_count(\n    oprio CHAR(15),\n    mode VARCHAR(4)\n) RETURNS INT AS $$\nDECLARE\n    val INT := 0;\nBEGIN\n    IF mode = 'high' THEN\n        IF oprio = '1-URGENT' OR oprio = '2-HIGH' THEN\n            val := 1;\n        END IF;\n    ELSIF mode = 'low' THEN\n        IF oprio = '1-URGENT' AND oprio = '2-HIGH' THEN\n            val := 1;\n        END IF;\n    END IF;\n    RETURN val;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "profit_amount.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION profit_amount(\n    @extprice DECIMAL(12,2),\n    @discount DECIMAL(12,2),\n    @suppcost DECIMAL(12,2),\n    @qty INT\n) RETURNS DECIMAL(12,2)\nAS\nBEGIN\n    RETURN @extprice * (1 - @discount) - @suppcost * @qty;\nEND;",
+        "sqlglot converted sql udf": "CREATE FUNCTION profit_amount($extprice DECIMAL(12, 2), $discount DECIMAL(12, 2), $suppcost DECIMAL(12, 2), $qty INT) RETURNS DECIMAL(12, 2) AS BEGIN RETURN $extprice * (1 - $discount) - $suppcost * $qty;\nEND",
+        "sqlglot error": "",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION profit_amount(\n    extprice DECIMAL(12,2),\n    discount DECIMAL(12,2),\n    suppcost DECIMAL(12,2),\n    qty INT\n) RETURNS DECIMAL(12,2) AS $$\nBEGIN\n    RETURN extprice * (1 - discount) - suppcost * qty;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "syntax error at or near \"$\"\nLINE 1: CREATE FUNCTION profit_amount($extprice DECIMAL(12, 2), $dis...\n                                      ^\n",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "promo_disc.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION promo_disc(\n    @ptype VARCHAR(25),\n    @extprice DECIMAL(12,2),\n    @disc DECIMAL(12,2)\n) RETURNS DECIMAL(12,2)\nAS\nBEGIN\n    DECLARE @val DECIMAL(12,2);\n\n    IF @ptype LIKE 'PROMO%'\n        SET @val = dbo.discount_price(@extprice, @disc);\n    ELSE\n        SET @val = 0.0;\n\n    RETURN @val;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 11, Col: 11.\n  ECIMAL(12,2)\nAS\nBEGIN\n    DECLARE @val DECIMAL(12,2);\n\n    IF @ptype LIKE 'PROMO%'\n        SET @val \u001b[4m=\u001b[0m dbo.discount_price(@extprice, @disc);\n    ELSE\n        SET @val = 0.0;\n\n    RETURN @val;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION promo_disc(\n    ptype VARCHAR(25),\n    extprice DECIMAL(12,2),\n    disc DECIMAL(12,2)\n) RETURNS DECIMAL(12,2) AS $$\nDECLARE\n    val DECIMAL(12,2);\nBEGIN\n    IF ptype LIKE 'PROMO%' THEN\n        val := discount_price(extprice, disc);\n    ELSE\n        val := 0.0;\n    END IF;\n    RETURN val;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q10conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q10conditions(\n    @odate DATE,\n    @retflag CHAR(1)\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @stdate DATE = '1993-10-01';\n    DECLARE @newdate DATE = DATEADD(MONTH, 3, @stdate);\n\n    IF @retflag <> 'R'\n        RETURN 0;\n\n    IF @odate >= @stdate AND @odate < @newdate\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 11, Col: 9.\n  01';\n    DECLARE @newdate DATE = DATEADD(MONTH, 3, @stdate);\n\n    IF @retflag <> 'R'\n        RETURN \u001b[4m0\u001b[0m;\n\n    IF @odate >= @stdate AND @odate < @newdate\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q10conditions(\n    odate DATE,\n    retflag CHAR(1)\n) RETURNS INT AS $$\nDECLARE\n    stdate DATE := '1993-10-01';\n    newdate DATE := stdate + INTERVAL '3 months';\nBEGIN\n    IF retflag <> 'R' THEN\n        RETURN 0;\n    END IF;\n    IF odate >= stdate AND odate < newdate THEN\n        RETURN 1;\n    END IF;\n    RETURN 0;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q12conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q12conditions(\n    @shipmode CHAR(10),\n    @commitdate DATE,\n    @receiptdate DATE,\n    @shipdate DATE\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @stdate DATE = '1995-09-01';\n    DECLARE @newdate DATE = DATEADD(MONTH, 1, @stdate);\n\n    IF @shipmode IN ('MAIL', 'SHIP')\n    BEGIN\n        IF @receiptdate < '1994-01-01'\n            RETURN 0;\n\n        IF @commitdate < @receiptdate AND @shipdate < @commitdate AND @receiptdate < @newdate\n            RETURN 1;\n    END;\n\n    RETURN 0;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Required keyword: 'true' missing for <class 'sqlglot.expressions.If'>. Line 13, Col: 6.\n  ;\n    DECLARE @newdate DATE = DATEADD(MONTH, 1, @stdate);\n\n    IF @shipmode IN ('MAIL', 'SHIP')\n    \u001b[4mBEGIN\u001b[0m\n        IF @receiptdate < '1994-01-01'\n            RETURN 0;\n\n        IF @commitdate < @receiptdate",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q12conditions(\n    shipmode CHAR(10),\n    commitdate DATE,\n    receiptdate DATE,\n    shipdate DATE\n) RETURNS INT AS $$\nDECLARE\n    stdate DATE := '1995-09-01';\n    newdate DATE := stdate + INTERVAL '1 month';\nBEGIN\n    IF shipmode IN ('MAIL', 'SHIP') THEN\n        IF receiptdate < '1994-01-01' THEN\n            RETURN 0;\n        END IF;\n        IF commitdate < receiptdate AND shipdate < commitdate AND receiptdate < newdate THEN\n            RETURN 1;\n        END IF;\n    END IF;\n    RETURN 0;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q19conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q19conditions(\n    @pcontainer CHAR(10),\n    @lqty INT,\n    @psize INT,\n    @shipmode CHAR(10),\n    @shipinst CHAR(25),\n    @pbrand CHAR(10)\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @val INT = 0;\n\n    IF @shipmode IN ('AIR', 'AIR REG') AND @shipinst = 'DELIVER IN PERSON'\n    BEGIN\n        IF @pbrand = 'Brand#12' AND @pcontainer IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND @lqty BETWEEN 1 AND 11 AND @psize BETWEEN 1 AND 5\n            SET @val = 1;\n\n        IF @pbrand = 'Brand#23' AND @pcontainer IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND @lqty BETWEEN 10 AND 20 AND @psize BETWEEN 1 AND 10\n            SET @val = 1;\n\n        IF @pbrand = 'Brand#34' AND @pcontainer IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND @lqty BETWEEN 20 AND 30 AND @psize BETWEEN 1 AND 15\n            SET @val = 1;\n    END;\n\n    RETURN @val;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Required keyword: 'true' missing for <class 'sqlglot.expressions.If'>. Line 14, Col: 6.\n  CLARE @val INT = 0;\n\n    IF @shipmode IN ('AIR', 'AIR REG') AND @shipinst = 'DELIVER IN PERSON'\n    \u001b[4mBEGIN\u001b[0m\n        IF @pbrand = 'Brand#12' AND @pcontainer IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND @",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q19conditions(\n    pcontainer CHAR(10),\n    lqty INT,\n    psize INT,\n    shipmode CHAR(10),\n    shipinst CHAR(25),\n    pbrand CHAR(10)\n) RETURNS INT AS $$\nDECLARE\n    val INT := 0;\nBEGIN\n    IF shipmode IN ('AIR', 'AIR REG') AND shipinst = 'DELIVER IN PERSON' THEN\n        IF pbrand = 'Brand#12' AND pcontainer IN ('SM CASE', 'SM BOX', 'SM PACK', 'SM PKG') AND lqty >= 1 AND lqty <= 11 AND psize BETWEEN 1 AND 5 THEN\n            val := 1;\n        END IF;\n        IF pbrand = 'Brand#23' AND pcontainer IN ('MED BAG', 'MED BOX', 'MED PKG', 'MED PACK') AND lqty >= 10 AND lqty <= 20 AND psize BETWEEN 1 AND 10 THEN\n            val := 1;\n        END IF;\n        IF pbrand = 'Brand#34' AND pcontainer IN ('LG CASE', 'LG BOX', 'LG PACK', 'LG PKG') AND lqty >= 20 AND lqty <= 30 AND psize BETWEEN 1 AND 15 THEN\n            val := 1;\n        END IF;\n    END IF;\n    RETURN val;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q3conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q3conditions(\n    @cmkt VARCHAR(10),\n    @odate DATE,\n    @shipdate DATE\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @thedate DATE = '1995-03-15';\n\n    IF @cmkt <> 'BUILDING'\n        RETURN 0;\n\n    IF dbo.checkDate(@thedate, @odate, @shipdate) = 0\n        RETURN 0;\n\n    IF dbo.isShippedBefore(@shipdate, 122, @thedate) = 0\n        RETURN 0;\n\n    RETURN 1;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 11, Col: 9.\n  S INT\nAS\nBEGIN\n    DECLARE @thedate DATE = '1995-03-15';\n\n    IF @cmkt <> 'BUILDING'\n        RETURN \u001b[4m0\u001b[0m;\n\n    IF dbo.checkDate(@thedate, @odate, @shipdate) = 0\n        RETURN 0;\n\n    IF dbo.isShippedBefo",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q3conditions(\n    cmkt VARCHAR(10),\n    odate DATE,\n    shipdate DATE\n) RETURNS INT AS $$\nDECLARE\n    thedate DATE := '1995-03-15';\nBEGIN\n    IF cmkt <> 'BUILDING' THEN\n        RETURN 0;\n    END IF;\n    IF checkDate(thedate::VARCHAR, odate, shipdate) = 0 THEN\n        RETURN 0;\n    END IF;\n    IF isShippedBefore(shipdate, 122, thedate::VARCHAR) = 0 THEN\n        RETURN 0;\n    END IF;\n    RETURN 1;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q5Conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q5Conditions(\n    @rname CHAR(25),\n    @odate DATE\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @beginDate DATE = '1994-01-01';\n    DECLARE @newdate DATE = DATEADD(YEAR, 1, @beginDate);\n\n    IF @rname <> 'ASIA' OR @odate < @beginDate OR @odate >= @newdate\n        RETURN 0;\n\n    RETURN 1;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 11, Col: 9.\n  , @beginDate);\n\n    IF @rname <> 'ASIA' OR @odate < @beginDate OR @odate >= @newdate\n        RETURN \u001b[4m0\u001b[0m;\n\n    RETURN 1;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q5Conditions(\n    rname CHAR(25),\n    odate DATE\n) RETURNS INT AS $$\nDECLARE\n    beginDate DATE := '1994-01-01';\n    newdate DATE := beginDate + INTERVAL '1 year';\nBEGIN\n    IF rname <> 'ASIA' THEN\n        RETURN 0;\n    END IF;\n    IF odate < beginDate THEN\n        RETURN 0;\n    END IF;\n    IF odate >= newdate THEN\n        RETURN 0;\n    END IF;\n    RETURN 1;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q6conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q6conditions(\n    @shipdate DATE,\n    @discount DECIMAL(12,2),\n    @qty INT\n) RETURNS INT\nAS\nBEGIN\n    DECLARE @stdate DATE = '1994-01-01';\n    DECLARE @newdate DATE = DATEADD(YEAR, 1, @stdate);\n    DECLARE @val DECIMAL(12,2) = 0.06;\n    DECLARE @epsilon DECIMAL(12,2) = 0.01;\n    DECLARE @lowerbound DECIMAL(12,2) = @val - @epsilon;\n    DECLARE @upperbound DECIMAL(12,2) = @val + @epsilon;\n\n    IF @shipdate < @stdate OR @shipdate >= @newdate OR @qty >= 24\n        RETURN 0;\n\n    IF @discount BETWEEN @lowerbound AND @upperbound\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Invalid expression / Unexpected token. Line 16, Col: 9.\n   @val + @epsilon;\n\n    IF @shipdate < @stdate OR @shipdate >= @newdate OR @qty >= 24\n        RETURN \u001b[4m0\u001b[0m;\n\n    IF @discount BETWEEN @lowerbound AND @upperbound\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q6conditions(\n    shipdate DATE,\n    discount DECIMAL(12,2),\n    qty INT\n) RETURNS INT AS $$\nDECLARE\n    stdate DATE := '1994-01-01';\n    newdate DATE := stdate + INTERVAL '1 year';\n    val DECIMAL(12,2) := 0.06;\n    epsilon DECIMAL(12,2) := 0.01;\n    lowerbound DECIMAL(12,2) := val - epsilon;\n    upperbound DECIMAL(12,2) := val + epsilon;\nBEGIN\n    IF shipdate < stdate THEN\n        RETURN 0;\n    END IF;\n    IF shipdate >= newdate THEN\n        RETURN 0;\n    END IF;\n    IF qty >= 24 THEN\n        RETURN 0;\n    END IF;\n    IF discount >= lowerbound AND discount <= upperbound THEN\n        RETURN 1;\n    END IF;\n    RETURN 0;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "q7conditions.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION q7conditions(\n    @n1name VARCHAR(25),\n    @n2name VARCHAR(25),\n    @shipdate DATE\n) RETURNS INT\nAS\nBEGIN\n    IF @shipdate NOT BETWEEN '1995-01-01' AND '1996-12-31'\n        RETURN 0;\n\n    IF (@n1name = 'FRANCE' AND @n2name = 'GERMANY') OR (@n1name = 'GERMANY' AND @n2name = 'FRANCE')\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "sqlglot converted sql udf": "",
+        "sqlglot error": "Required keyword: 'true' missing for <class 'sqlglot.expressions.If'>. Line 11, Col: 48.\n   '1995-01-01' AND '1996-12-31'\n        RETURN 0;\n\n    IF (@n1name = 'FRANCE' AND @n2name = 'GERMANY'\u001b[4m)\u001b[0m OR (@n1name = 'GERMANY' AND @n2name = 'FRANCE')\n        RETURN 1;\n\n    RETURN 0;\nEND;",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION q7conditions(\n    n1name VARCHAR(25),\n    n2name VARCHAR(25),\n    shipdate DATE\n) RETURNS INT AS $$\nBEGIN\n    IF shipdate NOT BETWEEN '1995-01-01' AND '1996-12-31' THEN\n        RETURN 0;\n    END IF;\n    IF n1name = 'FRANCE' AND n2name = 'GERMANY' THEN\n        RETURN 1;\n    END IF;\n    IF n1name = 'GERMANY' AND n2name = 'FRANCE' THEN\n        RETURN 1;\n    END IF;\n    RETURN 0;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "",
+        "AI converted result": "CREATE FUNCTION"
+    },
+    {
+        "filename": "total_value.sql",
+        "src sql type": "tsql",
+        "dst sql type": "postgres",
+        "src sql udf": "CREATE FUNCTION total_value() RETURNS DECIMAL(12,2)\nAS\nBEGIN\n    RETURN (\n        SELECT SUM(PS_SUPPLYCOST * PS_AVAILQTY) * 0.0001000000\n        FROM PARTSUPP\n        JOIN SUPPLIER ON PS_SUPPKEY = S_SUPPKEY\n        JOIN NATION ON S_NATIONKEY = N_NATIONKEY\n        WHERE N_NAME = 'GERMANY'\n    );\nEND;",
+        "sqlglot converted sql udf": "CREATE FUNCTION total_value() RETURNS DECIMAL(12, 2) AS BEGIN RETURN (SELECT SUM(PS_SUPPLYCOST * PS_AVAILQTY) * 0.0001000000 FROM PARTSUPP JOIN SUPPLIER ON PS_SUPPKEY = S_SUPPKEY JOIN NATION ON S_NATIONKEY = N_NATIONKEY WHERE N_NAME = 'GERMANY');\nEND",
+        "sqlglot error": "",
+        "AI converted sql udf": "CREATE OR REPLACE FUNCTION total_value() RETURNS DECIMAL(12,2) AS $$\nDECLARE\n    total DECIMAL(12,2);\nBEGIN\n    SELECT SUM(PS_SUPPLYCOST * PS_AVAILQTY) * 0.0001000000\n    INTO total\n    FROM PARTSUPP, SUPPLIER, NATION\n    WHERE PS_SUPPKEY = S_SUPPKEY\n      AND S_NATIONKEY = N_NATIONKEY\n      AND N_NAME = 'GERMANY';\n\n    RETURN total;\nEND;\n$$ LANGUAGE plpgsql;",
+        "sqlglot converted result": "syntax error at or near \"BEGIN\"\nLINE 1: ... FUNCTION total_value() RETURNS DECIMAL(12, 2) AS BEGIN RETU...\n                                                             ^\n",
+        "AI converted result": "CREATE FUNCTION"
+    }
+]

@@ -1,0 +1,10 @@
+CREATE OR REPLACE FUNCTION avg_actbal() RETURNS DECIMAL(12,2) AS $$
+BEGIN
+    RETURN (
+        SELECT AVG(C_ACCTBAL)
+        FROM CUSTOMER
+        WHERE C_ACCTBAL > 0.00
+        AND SUBSTRING(C_PHONE, 1, 2) IN ('13', '31', '23', '29', '30', '18', '17')
+    );
+END;
+$$ LANGUAGE plpgsql;

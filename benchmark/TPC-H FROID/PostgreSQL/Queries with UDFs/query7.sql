@@ -1,0 +1,35 @@
+SELECT 
+    SUPP_NATION, 
+    CUST_NATION, 
+    L_YEAR, 
+    SUM(VOLUME) AS REVENUE
+FROM 
+    (
+        SELECT 
+            N1.N_NAME AS SUPP_NATION, 
+            N2.N_NAME AS CUST_NATION, 
+            TO_CHAR(CAST(L_SHIPDATE AS TIMESTAMP), 'YY') AS L_YEAR, 
+            L_EXTENDEDPRICE * (1 - L_DISCOUNT) AS VOLUME
+        FROM 
+            SUPPLIER, 
+            LINEITEM, 
+            ORDERS, 
+            CUSTOMER, 
+            NATION AS N1, 
+            NATION AS N2
+        WHERE 
+            S_SUPPKEY = L_SUPPKEY 
+            AND O_ORDERKEY = L_ORDERKEY 
+            AND C_CUSTKEY = O_CUSTKEY 
+            AND S_NATIONKEY = N1.N_NATIONKEY 
+            AND C_NATIONKEY = N2.N_NATIONKEY 
+            AND Q7CONDITIONS(N1.N_NAME, N2.N_NAME, L_SHIPDATE) = 1
+    ) AS SHIPPING
+GROUP BY 
+    SUPP_NATION, 
+    CUST_NATION, 
+    L_YEAR
+ORDER BY 
+    SUPP_NATION NULLS FIRST, 
+    CUST_NATION NULLS FIRST, 
+    L_YEAR NULLS FIRST;

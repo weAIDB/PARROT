@@ -1,0 +1,7 @@
+/Commercial
+/results
+__pycache__
+**/__pycache__
+.coverage
+cov_html*
+.vscode

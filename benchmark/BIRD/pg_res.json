@@ -1,0 +1,246 @@
+[
+    {
+        "pg": "SELECT CAST( SUM( CASE WHEN TO_CHAR( CAST( \"creationdate\" AS TIMESTAMP ) , 'YYYY' ) = '2010' THEN 1 ELSE 0 END ) AS REAL ) / NULLIF( SUM( CASE WHEN TO_CHAR( CAST( \"creationdate\" AS TIMESTAMP ) , 'YYYY' ) = '2011' THEN 1 ELSE 0 END ) , 0 ) FROM \"votes\"\n",
+        "cracksql": "SELECT CAST( SUM( CASE WHEN DATE_FORMAT(`creationdate`, '%Y') = '2010' THEN 1 ELSE 0 END ) AS REAL ) / NULLIF( SUM( CASE WHEN DATE_FORMAT(`creationdate`, '%Y') = '2011' THEN 1 ELSE 0 END ) , 0 ) FROM `votes`",
+        "result": [
+            {
+                "?column?": 1.307099679981036
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"text\" FROM \"comments\" WHERE \"postid\" IN ( SELECT \"id\" FROM \"posts\" WHERE \"viewcount\" BETWEEN 100 AND 150 ) ORDER BY \"score\" DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT `text` FROM `comments` WHERE `postid` IN ( SELECT `id` FROM `posts` WHERE `viewcount` BETWEEN 100 AND 150 ) ORDER BY `score` DESC LIMIT 1",
+        "result": [
+            {
+                "text": "Welcome to Cross Validated David P, for more information about the site and how to ask questions, you can check out the [FAQ](http://stats.stackexchange.com/faq). Is your question just about whether the calculation is right or wrong (it is wrong, with the numbers you give on your second line the result of the operation is 0.187, rounded)? Otherwise, yes, a percentage can be as close to zero as you can imagine because it is bounded between 0 and 100 and continuous on that interval."
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"street\" , \"t2\".\"city\" , \"t2\".\"state\" , \"t2\".\"zip\" FROM \"satscores\" AS \"t1\" INNER JOIN \"schools\" AS \"t2\" ON \"t1\".\"cds\" = \"t2\".\"cdscode\" ORDER BY CAST( \"t1\".\"numge1500\" AS REAL ) / NULLIF( \"t1\".\"numtsttakr\" , 0 ) ASC NULLS FIRST LIMIT 1\n",
+        "cracksql": "SELECT `t2`.`street`, `t2`.`city`, `t2`.`state`, `t2`.`zip` FROM `satscores` AS `t1` INNER JOIN `schools` AS `t2` ON `t1`.`cds` = `t2`.`cdscode` ORDER BY IFNULL(`t1`.`numge1500` / `t1`.`numtsttakr`, 0) ASC LIMIT 1",
+        "result": [
+            {
+                "street": "2125 Jefferson Avenue",
+                "city": "Berkeley",
+                "state": "CA",
+                "zip": "94703-1414"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"gsoffered\" FROM \"schools\" ORDER BY ABS( \"longitude\" ) DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT `gsoffered` FROM `schools` ORDER BY ABS(`longitude`) DESC LIMIT 1",
+        "result": [
+            {
+                "gsoffered": "K-8"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"admemail1\" , \"t2\".\"admemail2\" FROM \"frpm\" AS \"t1\" INNER JOIN \"schools\" AS \"t2\" ON \"t1\".\"cdscode\" = \"t2\".\"cdscode\" WHERE \"t2\".\"county\" = 'San Bernardino' AND \"t2\".\"city\" = 'San Bernardino' AND \"t2\".\"doc\" :: integer = 54 AND EXTRACT( YEAR FROM \"t2\".\"opendate\" ) BETWEEN 2009 AND 2010 AND \"t2\".\"soc\" :: integer = 62\n",
+        "cracksql": "SELECT `t2`.`admemail1`, `t2`.`admemail2` FROM `frpm` AS `t1` INNER JOIN `schools` AS `t2` ON `t1`.`cdscode` = `t2`.`cdscode` WHERE `t2`.`county` = 'San Bernardino' AND `t2`.`city` = 'San Bernardino' AND `t2`.`doc` = 54 AND YEAR(`t2`.`opendate`) BETWEEN 2009 AND 2010 AND `t2`.`soc` = 62",
+        "result": [
+            {
+                "admemail1": "a.lucero@realjourney.org",
+                "admemail2": "j.hernandez@realjourney.org"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t1\".\"account_id\" , ( SELECT MAX( \"a11\" ) - MIN( \"a11\" ) FROM \"district\" ) FROM \"account\" AS \"t1\" INNER JOIN \"district\" AS \"t2\" ON \"t1\".\"district_id\" = \"t2\".\"district_id\" INNER JOIN \"disp\" AS \"t3\" ON \"t1\".\"account_id\" = \"t3\".\"account_id\" INNER JOIN \"client\" AS \"t4\" ON \"t3\".\"client_id\" = \"t4\".\"client_id\" WHERE \"t2\".\"district_id\" = ( SELECT \"district_id\" FROM \"client\" WHERE \"gender\" = 'F' ORDER BY \"birth_date\" ASC NULLS FIRST LIMIT 1 ) ORDER BY \"t2\".\"a11\" DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT `t1`.`account_id`, ( SELECT MAX( `a11` ) - MIN( `a11` ) FROM `district` ) FROM `account` AS `t1` INNER JOIN `district` AS `t2` ON `t1`.`district_id` = `t2`.`district_id` INNER JOIN `disp` AS `t3` ON `t1`.`account_id` = `t3`.`account_id` INNER JOIN `client` AS `t4` ON `t3`.`client_id` = `t4`.`client_id` WHERE `t2`.`district_id` = ( SELECT `district_id` FROM `client` WHERE `gender` = 'F' ORDER BY `birth_date` ASC LIMIT 1 ) ORDER BY IFNULL(`t2`.`a11`, 0) DESC LIMIT 1",
+        "result": [
+            {
+                "account_id": 6,
+                "?column?": 4431
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t1\".\"account_id\" FROM \"loan\" AS \"t1\" INNER JOIN \"account\" AS \"t2\" ON \"t1\".\"account_id\" = \"t2\".\"account_id\" WHERE TO_CHAR( CAST( \"t2\".\"date\" AS TIMESTAMP ) , 'YYYY' ) = '1993' AND \"t1\".\"duration\" > 12 ORDER BY \"t1\".\"amount\" DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT `t1`.`account_id` FROM `loan` AS `t1` INNER JOIN `account` AS `t2` ON `t1`.`account_id` = `t2`.`account_id` WHERE YEAR(CAST(`t2`.`date` AS DATE)) = 1993 AND `t1`.`duration` > 12 ORDER BY `t1`.`amount` DESC LIMIT 1",
+        "result": [
+            {
+                "account_id": 10451
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"a2\" , COUNT( \"t1\".\"client_id\" ) FROM \"client\" AS \"t1\" INNER JOIN \"district\" AS \"t2\" ON \"t1\".\"district_id\" = \"t2\".\"district_id\" WHERE \"t1\".\"gender\" = 'F' GROUP BY \"t2\".\"district_id\" , \"t2\".\"a2\" ORDER BY COUNT( \"t1\".\"client_id\" ) DESC NULLS LAST LIMIT 9\n",
+        "cracksql": "SELECT `t2`.`a2` , COUNT( `t1`.`client_id` ) FROM `client` AS `t1` INNER JOIN `district` AS `t2` ON `t1`.`district_id` = `t2`.`district_id` WHERE `t1`.`gender` = 'F' GROUP BY `t2`.`district_id` , `t2`.`a2` ORDER BY COUNT(`t1`.`client_id`) DESC LIMIT 9",
+        "result": [
+            {
+                "a2": "Hl.m. Praha",
+                "count": 324
+            },
+            {
+                "a2": "Karvina",
+                "count": 88
+            },
+            {
+                "a2": "Ostrava - mesto",
+                "count": 84
+            },
+            {
+                "a2": "Brno - mesto",
+                "count": 75
+            },
+            {
+                "a2": "Zlin",
+                "count": 57
+            },
+            {
+                "a2": "Olomouc",
+                "count": 50
+            },
+            {
+                "a2": "Frydek - Mistek",
+                "count": 42
+            },
+            {
+                "a2": "Kolin",
+                "count": 39
+            },
+            {
+                "a2": "Nachod",
+                "count": 37
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"milliseconds\" , \"t1\".\"forename\" , \"t1\".\"surname\" , \"t3\".\"name\" FROM \"drivers\" AS \"t1\" INNER JOIN \"laptimes\" AS \"t2\" ON \"t1\".\"driverid\" = \"t2\".\"driverid\" INNER JOIN \"races\" AS \"t3\" ON \"t2\".\"raceid\" = \"t3\".\"raceid\" ORDER BY \"t2\".\"milliseconds\" ASC NULLS FIRST LIMIT 1\n",
+        "cracksql": "SELECT `t2`.`milliseconds`, `t1`.`forename`, `t1`.`surname`, `t3`.`name` FROM `drivers` AS `t1` INNER JOIN `laptimes` AS `t2` ON `t1`.`driverid` = `t2`.`driverid` INNER JOIN `races` AS `t3` ON `t2`.`raceid` = `t3`.`raceid` ORDER BY `t2`.`milliseconds` ASC LIMIT 1",
+        "result": [
+            {
+                "milliseconds": 67411,
+                "forename": "Lewis",
+                "surname": "Hamilton",
+                "name": "Austrian Grand Prix"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"nationality\" FROM \"drivers\" WHERE NOT \"dob\" IS NULL ORDER BY \"dob\" ASC NULLS FIRST LIMIT 1\n",
+        "cracksql": "SELECT `nationality` FROM `drivers` WHERE NOT `dob` IS NULL ORDER BY `dob` IS NULL, `dob` ASC LIMIT 1",
+        "result": [
+            {
+                "nationality": "French"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"driverid\" , \"t2\".\"code\" FROM \"results\" AS \"t1\" INNER JOIN \"drivers\" AS \"t2\" ON \"t1\".\"driverid\" = \"t2\".\"driverid\" WHERE TO_CHAR( CAST( \"t2\".\"dob\" AS TIMESTAMP ) , 'YYYY' ) = '1971' AND NOT \"t1\".\"fastestlaptime\" IS NULL\n",
+        "cracksql": "SELECT `t2`.`driverid` , `t2`.`code` FROM `results` AS `t1` INNER JOIN `drivers` AS `t2` ON `t1`.`driverid` = `t2`.`driverid` WHERE CAST(`t2`.`dob` AS DATE) LIKE '1971%' AND NOT `t1`.`fastestlaptime` IS NULL",
+        "result": [
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            },
+            {
+                "driverid": 14,
+                "code": "COU"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"event_name\" FROM \"budget\" AS \"t1\" INNER JOIN \"event\" AS \"t2\" ON \"t2\".\"event_id\" = \"t1\".\"link_to_event\" WHERE \"t1\".\"event_status\" = 'Closed' AND \"t1\".\"remaining\" < 0 ORDER BY \"t1\".\"remaining\" NULLS FIRST LIMIT 1\n",
+        "cracksql": "SELECT `t2`.`event_name` FROM `budget` AS `t1` INNER JOIN `event` AS `t2` ON `t2`.`event_id` = `t1`.`link_to_event` WHERE `t1`.`event_status` = 'Closed' AND `t1`.`remaining` < 0 ORDER BY `t1`.`remaining` ASC LIMIT 1",
+        "result": [
+            {
+                "event_name": "September Speaker"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT CAST( SUM( CASE WHEN \"sex\" = 'F' THEN 1 ELSE 0 END ) AS REAL ) * 100 / NULLIF( COUNT( \"id\" ) , 0 ) FROM \"patient\" WHERE \"diagnosis\" = 'RA' AND TO_CHAR( CAST( \"birthday\" AS TIMESTAMP ) , 'YYYY' ) = '1980'\n",
+        "cracksql": "SELECT CAST( SUM( CASE WHEN `sex` = 'F' THEN 1 ELSE 0 END ) AS REAL ) * 100 / NULLIF( COUNT( `id` ) , 0 ) FROM `patient` WHERE `diagnosis` = 'RA' AND YEAR(CAST(`birthday` AS DATE)) = 1980",
+        "result": [
+            {
+                "?column?": 100.0
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"forename\" , \"t2\".\"surname\" FROM \"qualifying\" AS \"t1\" INNER JOIN \"drivers\" AS \"t2\" ON \"t1\".\"driverid\" = \"t2\".\"driverid\" INNER JOIN \"races\" AS \"t3\" ON \"t1\".\"raceid\" = \"t3\".\"raceid\" WHERE \"q3\" IS NOT NULL AND \"t3\".\"year\" = 2008 AND \"t3\".\"circuitid\" IN ( SELECT \"circuitid\" FROM \"circuits\" WHERE \"name\" = 'Marina Bay Street Circuit' ) ORDER BY CAST( SPLIT_PART( \"q3\" , ':' , 1 ) AS INTEGER ) * 60 + CAST( SPLIT_PART( SPLIT_PART( \"q3\" , ':' , 2 ) , '.' , 1 ) AS REAL ) + CAST( SPLIT_PART( \"q3\" , '.' , 2 ) AS REAL ) / 1000 ASC LIMIT 1\n",
+        "cracksql": "SELECT `t2`.`forename` , `t2`.`surname` FROM `qualifying` AS `t1` INNER JOIN `drivers` AS `t2` ON `t1`.`driverid` = `t2`.`driverid` INNER JOIN `races` AS `t3` ON `t1`.`raceid` = `t3`.`raceid` WHERE `q3` IS NOT NULL AND `t3`.`year` = 2008 AND `t3`.`circuitid` IN ( SELECT `circuitid` FROM `circuits` WHERE `name` = 'Marina Bay Street Circuit' ) ORDER BY SUBSTRING_INDEX(`q3`, ':', 1) + 0 * 60 + CAST( SUBSTRING_INDEX(SUBSTRING_INDEX(`q3`, ':', 2), '.', 1) AS REAL ) + CAST( SUBSTRING_INDEX(`q3`, '.', 2) AS REAL ) / 1000 ASC LIMIT 1",
+        "result": [
+            {
+                "forename": "Felipe",
+                "surname": "Massa"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t1\".\"forename\" , \"t1\".\"surname\" , \"t1\".\"nationality\" , \"t3\".\"name\" FROM \"drivers\" AS \"t1\" INNER JOIN \"driverstandings\" AS \"t2\" ON \"t1\".\"driverid\" = \"t2\".\"driverid\" INNER JOIN \"races\" AS \"t3\" ON \"t2\".\"raceid\" = \"t3\".\"raceid\" WHERE \"t1\".\"dob\" notnull ORDER BY \"t1\".\"dob\" DESC LIMIT 1\n",
+        "cracksql": "SELECT `t1`.`forename` , `t1`.`surname` , `t1`.`nationality` , `t3`.`name` FROM `drivers` AS `t1` INNER JOIN `driverstandings` AS `t2` ON `t1`.`driverid` = `t2`.`driverid` INNER JOIN `races` AS `t3` ON `t2`.`raceid` = `t3`.`raceid` WHERE `t1`.`dob` IS NOT NULL ORDER BY `t1`.`dob` DESC LIMIT 1",
+        "result": [
+            {
+                "forename": "Lance",
+                "surname": "Stroll",
+                "nationality": "Canadian",
+                "name": "Chinese Grand Prix"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT COUNT( \"t1\".\"driverid\" ) FROM \"results\" AS \"t1\" INNER JOIN \"races\" AS \"t2\" ON \"t1\".\"raceid\" = \"t2\".\"raceid\" INNER JOIN \"status\" AS \"t3\" ON \"t1\".\"statusid\" = \"t3\".\"statusid\" WHERE \"t3\".\"statusid\" = 3 AND \"t2\".\"name\" = 'Canadian Grand Prix' GROUP BY \"t1\".\"driverid\" ORDER BY COUNT( \"t1\".\"driverid\" ) DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT COUNT( `t1`.`driverid` ) FROM `results` AS `t1` INNER JOIN `races` AS `t2` ON `t1`.`raceid` = `t2`.`raceid` INNER JOIN `status` AS `t3` ON `t1`.`statusid` = `t3`.`statusid` WHERE `t3`.`statusid` = 3 AND `t2`.`name` = 'Canadian Grand Prix' GROUP BY `t1`.`driverid` ORDER BY COUNT(`t1`.`driverid`) DESC LIMIT 1",
+        "result": [
+            {
+                "count": 2
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"name\" FROM \"match\" AS \"t1\" INNER JOIN \"league\" AS \"t2\" ON \"t1\".\"league_id\" = \"t2\".\"id\" WHERE \"t1\".\"season\" = '2015/2016' GROUP BY \"t2\".\"name\" ORDER BY SUM( \"t1\".\"home_team_goal\" + \"t1\".\"away_team_goal\" ) DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT `t2`.`name` FROM `match` AS `t1` INNER JOIN `league` AS `t2` ON `t1`.`league_id` = `t2`.`id` WHERE `t1`.`season` = '2015/2016' GROUP BY `t2`.`name` ORDER BY SUM(`t1`.`home_team_goal` + `t1`.`away_team_goal`) DESC LIMIT 1",
+        "result": [
+            {
+                "name": "Spain LIGA BBVA"
+            }
+        ]
+    },
+    {
+        "pg": "SELECT \"t2\".\"name\" FROM \"match\" AS \"t1\" INNER JOIN \"league\" AS \"t2\" ON \"t1\".\"league_id\" = \"t2\".\"id\" WHERE \"t1\".\"season\" = '2015/2016' AND \"t1\".\"home_team_goal\" = \"t1\".\"away_team_goal\" GROUP BY \"t2\".\"name\" ORDER BY COUNT( \"t1\".\"id\" ) DESC NULLS LAST LIMIT 1\n",
+        "cracksql": "SELECT `t2`.`name` FROM `match` AS `t1` INNER JOIN `league` AS `t2` ON `t1`.`league_id` = `t2`.`id` WHERE `t1`.`season` = '2015/2016' AND `t1`.`home_team_goal` = `t1`.`away_team_goal` GROUP BY `t2`.`name` ORDER BY COUNT(`t1`.`id`) DESC LIMIT 1",
+        "result": [
+            {
+                "name": "France Ligue 1"
+            }
+        ]
+    }
+]

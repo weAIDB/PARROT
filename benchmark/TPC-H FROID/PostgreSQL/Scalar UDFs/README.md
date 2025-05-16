@@ -1,0 +1,1 @@
+File `IMPORT_FUNCTIONS.sql` includes all UDF definitions and can be directly executed in the database to import all UDFs at once.
