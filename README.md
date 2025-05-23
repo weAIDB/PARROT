@@ -1,42 +1,156 @@
-| Benchmark        | Year | Language        | Domain Type   | Turn Type | Collection               | SQL Dialects Supported                 | Additional Information                                                        | Paper Link                                                    | Download Link                                                                          |
-| ---------------- | ---- | --------------- | ------------- | --------- | ------------------------ | -------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| ATIS             | 1994 | English         | Single-domain | Single    | Hand-crafted             | **SQLite**, **MySQL**                  | According to the text2sql-data repository, the original data may be in MySQL. | [Paper](http://aclweb.org/anthology/P18-1033)                 | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| GeoQuery         | 1996 | English         | Single-domain | Single    | Hand-crafted             | **MySQL**, **SQLite**                  | Originally used Prolog, later converted to SQL.                               | [Paper](http://dl.acm.org/citation.cfm?id=1864519.1864543)    | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| Restaurants      | 2000 | English         | Single-domain | Single    | Hand-crafted             | **SQLite**                             | Provided by the text2sql-data repository.                                     | [Paper](https://dl.acm.org/doi/10.3115/1117794.1117811)       | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| Academic         | 2014 | English         | Single-domain | Single    | Hand-crafted             | Not explicitly stated                  | -                                                                             | [Paper](http://dx.doi.org/10.14778/2735461.2735468)           | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| IMDb             | 2017 | English         | Single-domain | Single    | Hand-crafted             | Not explicitly stated                  | -                                                                             | [Paper](http://doi.org/10.1145/3133887)                       | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| Yelp             | 2017 | English         | Single-domain | Single    | Hand-crafted             | Not explicitly stated                  | -                                                                             | [Paper](http://doi.org/10.1145/3133887)                       | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| Scholar          | 2017 | English         | Single-domain | Single    | Hand-crafted             | Not explicitly stated                  | -                                                                             | [Paper](http://www.aclweb.org/anthology/P17-1089)             | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| WikiSQL          | 2017 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite3**                            | This is the original distribution format of the WikiSQL dataset.              | [Paper](https://arxiv.org/abs/1709.00103)                     | [Download](https://github.com/salesforce/WikiSQL)                                      |
-| Advising         | 2018 | English         | Single-domain | Single    | Hand-crafted             | **SQLite**, **MySQL**                  | Primarily provided in SQLite format; the original data may be in MySQL.       | [Paper](https://arxiv.org/abs/1709.00103)                     | [Download](https://github.com/jkkummerfeld/text2sql-data/tree/master)                  |
-| Spider           | 2018 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | Processed metadata is available in the text2sql-data repository.              | [Paper](http://aclweb.org/anthology/D18-1425)                 | [Download](https://yale-lily.github.io/spider)                                         |
-| SParC            | 2019 | English         | Cross-domain  | Multiple  | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/1906.02285)                     | [Download](https://yale-lily.github.io/sparc)                                          |
-| CoSQL            | 2019 | English         | Cross-domain  | Multiple  | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/1909.05378)                     | [Download](https://yale-lily.github.io/cosql)                                          |
-| CSpider          | 2019 | Chinese         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/1909.13293)                     | [Download](https://taolusi.github.io/CSpider-explorer/)                                |
-| MIMICSQL         | 2020 | English         | Single-domain | Single    | Auto-generated + Mannual | **SQLite**                             | -                                                                             | [Paper](https://dmkd.cs.vt.edu/papers/WWW20.pdf)              | [Download](https://github.com/wangpinggl/TREQS)                                        |
-| SQUALL           | 2020 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/2010.11246)                     | [Download](https://github.com/tzshi/squall)                                            |
-| FIBEN            | 2020 | English         | Single-domain | Single    | Hand-crafted             | **Db2**, **PostgreSQL**                | -                                                                             | [Paper](https://www.vldb.org/pvldb/vol13/p2747-sen.pdf)       | [Download](https://github.com/IBM/fiben-benchmark/tree/master)                         |
-| ViText2SQL       | 2020 | Vietnamese      | Cross-domain  | Single    | Hand-crafted             | General SQL language evaluation        | -                                                                             | [Paper](https://aclanthology.org/2020.findings-emnlp.364/)    | [Download](https://github.com/VinAIResearch/ViText2SQL/tree/master)                    |
-| DuSQL            | 2020 | Chinese         | Cross-domain  | Single    | Auto-generated + Manual | Not explicitly stated                  | -                                                                             | [Paper](https://aclanthology.org/2020.emnlp-main.562/)        | [Download](https://github.com/PaddlePaddle/Research/tree/master/NLP/Text2SQL-BASELINE) |
-| PortugueseSpider | 2021 | Portuguese      | Cross-domain  | Single    | Auto-generated + Manual | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/2110.03546)                     | [Download](https://github.com/C4AI/gap-text2sql)                                       |
-| CHASE            | 2021 | Chinese         | Cross-domain  | Multiple  | Hand-crafted             | **SQLite**                             | Project homepage: https://xjtu-intsoft.github.io/chase                        | [Paper](https://aclanthology.org/2021.acl-long.180/)          | [Download](https://github.com/xjtu-intsoft/chase)                                      |
-| Spider-Syn       | 2021 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/2106.01065)                     | [Download](https://github.com/ygan/Spider-Syn)                                         |
-| Spider-DK        | 2021 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/2109.05157)                     | [Download](https://github.com/ygan/spider-dk)                                          |
-| Spider-Realistic | 2021 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | Dataset: https://doi.org/10.5281/zenodo.5205322                               | [Paper](https://arxiv.org/pdf/2010.12773v3)                   | [Download](https://github.com/taoyds/spider)                                           |
-| KaggleDBQA       | 2021 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://aclanthology.org/2021.acl-long.176/)          | [Download](https://github.com/Chia-Hsuan-Lee/KaggleDBQA)                               |
-| SEDE             | 2021 | English         | Single-domain | Single    | Hand-crafted             | **T-SQL**                              | -                                                                             | [Paper](https://arxiv.org/abs/2106.05006)                     | [Download](https://github.com/hirupert/sede)                                           |
-| MT-TEQL          | 2021 | English         | Cross-domain  | Single    | Auto-generated           | **SQLite**                             | Based on Spider.                                                              | [Paper](https://dl.acm.org/doi/abs/10.14778/3494124.3494139)  | [Download](https://github.com/MTTeql/MT-Teql)                                          |
-| PAUQ             | 2022 | Russian         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://aclanthology.org/2022.findings-emnlp.175.pdf) | [Download](https://github.com/ai-spiderweb/pauq/tree/main?tab=readme-ov-file)          |
-| knowSQL          | 2022 | Chinese         | Cross-domain  | Single    | Hand-crafted             | -                                      | -                                                                             | [Paper](https://arxiv.org/abs/2301.01067)                     | [download](https://huggingface.co/datasets/knowrohit07/know_sql)                       |
-| Dr.Spider        | 2023 | English         | Cross-domain  | Single    | Auto-generated + Manual | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/pdf/2301.08881.pdf)                 | [Download](https://github.com/awslabs/diagnostic-robustness-text-to-sql/tree/main)     |
-| BIRD             | 2023 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -        | [Paper](https://arxiv.org/pdf/2305.03111)                     | [Download](https://bird-bench.github.io/)                                              |
-| AmbiQT           | 2023 | English         | Cross-domain  | Single    | ChatGPT-aided + Manual  | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/2310.13659)                     | [Download](https://github.com/testzer0/ambiqt)                                         |
-| ScienceBenchmark | 2024 | English         | Single-domain | Single    | Auto-generated + Manual | General SQL language evaluation        | -                                                                             | [Paper](https://arxiv.org/abs/2306.04743)                     | [Download](https://github.com/ckosten/sciencebenchmark_dataset)                        |
-| BULL             | 2024 | English/Chinese | Single-domain | Single    | Hand-crafted             | Presumed **SQLite**                    | -                                                                             | [Paper](https://arxiv.org/abs/2401.10506v1)                   | [Download](https://github.com/bigbigwatermalon/FinSQL)                                 |
-| BookSQL          | 2024 | English         | Single-domain | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://arxiv.org/abs/2406.07860)                     | [Download](https://github.com/Exploration-Lab/BookSQL)                                 |
-| Archer           | 2024 | English/Chinese | Cross-domain  | Single    | Hand-crafted             | **SQLite**                             | -                                                                             | [Paper](https://aclanthology.org/2024.eacl-long.6/)           | [Download](https://sig4kg.github.io/archer-bench/)                                     |
-| Spider2          | 2024 | English         | Cross-domain  | Single    | Hand-crafted             | **SQLite**, **DuckDB**, **PostgreSQL** | -                                                                             | [Paper](https://arxiv.org/abs/2411.07763)                     | [Download](https://github.com/xlang-ai/Spider2)                                        |                               |
-| SQL-ProcBench      | 2021     |  English | Enterprise workloads | Single   | Extracted from production workloads     | **SQL Server**, **PostgreSQL**, **IBM Db2** | - | [Paper](https://15799.courses.cs.cmu.edu/spring2025/papers/19-udfs/p1378-ramachandra.pdf?utm_source=chatgpt.com) | [Download ](https://github.com/microsoft/SQL-ProcBench) |                                 |
-| TPC-H FROID      | 2018 | English          | Cross-domain   | Single     |Auto-generated + Manual | **T-SQL**, **PostgreSQL**            | -   | [Paper](https://arxiv.org/abs/1712.00498) | - |
-| DSB              | 2021 | English  | Decision Support | Single    | Auto-generated + Manual  | **T-SQL**, **PostgreSQL**           | - | [Paper](https://www.vldb.org/pvldb/vol14/p3376-ding.pdf) | [Download](https://github.com/microsoft/dsb?tab=readme-ov-file) |
-| TPC-DS    | 2005 | English  | Decision Support | Single    | Auto-generated + Manual  | **T-SQL**, **PostgreSQL**           | - | - | -|
+---
+# For reference on dataset card metadata, see the spec: https://github.com/huggingface/hub-docs/blob/main/datasetcard.md?plain=1
+# Doc / guide: https://huggingface.co/docs/hub/datasets-cards
+{}
+---
+
+# 🦜 PARROT
+
+<!-- Provide a quick summary of the dataset. -->
+
+![PARROT Overview](./parrot-website-logo.png)
+
+PARROT (**P**ractical **A**nd **R**ealistic Benchma**R**k for Cr**O**ss-System SQL **T**ranslation) was created to support the task of Cross-System SQL Translation (i.e., SQL-to-SQL translation), 
+which involves adapting a query written for one database system into its functionally equivalent form for another. 
+The main dataset comprises 598 translation pairs from 38 open-source benchmarks and real-world business services, 
+specifically prepared to challenge system-specific SQL understanding.
+
+## 📂 1. Dataset Details
+
+### 1.1 Dataset Description
+
+<!-- Provide a longer summary of what this dataset is. -->
+
+- **Curated by:** Shanghai Jiao Tong University, Tsinghua University, and Bytedance Team.
+- **Language(s) (NLP):** Different dialects with SQL adhering to the standards of PostgreSQL, Oracle, MySQL etc.
+- **License:** This project is released under the MIT license. 
+
+### 1.2 Dataset Sources
+
+<!-- Provide the basic links for the dataset. -->
+
+PARROT is constructed based on a collection of open-source SQL-related benchmarks and workloads from real world business service.
+The following table presents the details of the collected open-source benchmarks in PARROT, highlighting their sources, dialect coverage, and key statistics.
+
+| Benchmark         | Year | SQL Dialects       | Language          | Domain Type      | Turn Round    | Collection            |
+|-------------------|:------:|:------------------------------:|:-------------------:|:------------------:|:---------:|:-----------------------:|
+| ATIS              | 1994 | SQLite, MySQL                | English           | Single-domain    | Single  | Manual                |
+| GeoQuery          | 1996 | MySQL, SQLite                | English           | Single-domain    | Single  | Manual                |
+| Restaurants       | 2000 | SQLite                       | English           | Single-domain    | Single  | Manual                |
+| Academic          | 2014 | *Unspecified*                | English           | Single-domain    | Single  | Manual                |
+| IMDb              | 2017 | *Unspecified*                | English           | Single-domain    | Single  | Manual                |
+| Yelp              | 2017 | *Unspecified*                | English           | Single-domain    | Single  | Manual                |
+| Scholar           | 2017 | *Unspecified*                | English           | Single-domain    | Single  | Manual                |
+| WikiSQL           | 2017 | SQLite                      | English           | Cross-domain     | Single  | Manual                |
+| Advising          | 2018 | SQLite, MySQL                | English           | Single-domain    | Single  | Manual                |
+| Spider            | 2018 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| SParC             | 2019 | SQLite                       | English           | Cross-domain     | Multiple| Manual                |
+| CoSQL             | 2019 | SQLite                       | English           | Cross-domain     | Multiple| Manual                |
+| CSpider           | 2019 | SQLite                       | Chinese           | Cross-domain     | Single  | Manual                |
+| MIMICSQL          | 2020 | SQLite                       | English           | Single-domain    | Single  | Hybrid†               |
+| SQUALL            | 2020 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| FIBEN             | 2020 | IBM Db2, PostgreSQL              | English           | Single-domain    | Single  | Manual                |
+| ViText2SQL        | 2020 | General SQL                  | Vietnamese        | Cross-domain     | Single  | Manual                |
+| DuSQL             | 2020 | *Unspecified*                | Chinese           | Cross-domain     | Single  | Hybrid†               |
+| PortugueseSpider  | 2021 | SQLite                       | Portuguese        | Cross-domain     | Single  | Hybrid†               |
+| CHASE             | 2021 | SQLite                       | Chinese           | Cross-domain     | Multiple| Manual                |
+| Spider-Syn        | 2021 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| Spider-DK         | 2021 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| Spider-Realistic  | 2021 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| KaggleDBQA        | 2021 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| SEDE              | 2021 | T-SQL                        | English           | Single-domain    | Single  | Manual                |
+| MT-TEQL           | 2021 | SQLite                       | English           | Cross-domain     | Single  | Automatic             |
+| PAUQ              | 2022 | SQLite                       | Russian           | Cross-domain     | Single  | Manual                |
+| knowSQL           | 2022 | *Unspecified*                | Chinese           | Cross-domain     | Single  | Manual                |
+| Dr.Spider         | 2023 | SQLite                       | English           | Cross-domain     | Single  | Hybrid†               |
+| BIRD              | 2023 | SQLite                       | English           | Cross-domain     | Single  | Manual                |
+| AmbiQT            | 2023 | SQLite                       | English           | Cross-domain     | Single  | LLM-aided             |
+| ScienceBenchmark  | 2024 | General SQL                  | English           | Single-domain    | Single  | Hybrid†               |
+| BookSQL           | 2024 | SQLite                       | English           | Single-domain    | Single  | Manual                |
+| Archer            | 2024 | SQLite                       | English/ Chinese  | Cross-domain     | Single  | Manual                |
+| BULL              | 2024 | SQLite                       | English/ Chinese  | Single-domain    | Single  | Manual                |
+| Spider2           | 2024 | SQLite, DuckDB, PostgreSQL   | English           | Cross-domain     | Single  | Manual                |
+| TPC-H FROID       | 2018 | T-SQL, PostgreSQL            | English           | Cross-domain     | Single  | Hybrid†               |
+| DSB               | 2021 | T-SQL, PostgreSQL            | English           | Decision Support | Single  | Hybrid†               |
+| TPC-DS            | 2005 | T-SQL, PostgreSQL            | English           | Decision Support | Single  | Hybrid†               |
+| SQL-ProcBench     | 2021 | SQL Server, PostgreSQL, IBM Db2 | English       | Single-domain | Single | Production-derived |
+
+† **Hybrid** means the dataset was created using both automatic generation and manual annotation.
+
+## ⚙️ 2. Uses
+
+<!-- Address questions around how the dataset is intended to be used. -->
+
+### 2.1 Direct Use
+
+<!-- This section describes suitable use cases for the dataset. -->
+
+PARROT supports direct in various manners.
+Below, we showcase how to load it with `datasets` library.
+
+```
+from datasets import load_dataset
+
+# Login using e.g. `huggingface-cli login` to access this dataset
+ds = load_dataset("weizhoudb/PARROT")
+```
+
+## 🧩 3. Dataset Creation
+
+### 3.1 Curation Rationale
+
+<!-- Motivation for the creation of this dataset. -->
+
+PARROT intends to construct a realistic and challenging benchmark for evaluating cross-dialect SQL translation. 
+The collected queries pass through a rigorous curation pipeline that retains only those queries satisfying Jim Gray’s four benchmark design principles.
+
+- **(1) Relevance:** PARROT covers a wide range of cross-system SQL translation cases, including different operator complexities. 
+- **(2) Simplicity:** PARROT is designed to eliminate redundant SQLs and be easily understandable.
+- **(3) Portability:** PARROT is applicable to different translation scenarios (e.g., with different source / target data systems).
+- **(4) Scalability:** PARROT includes real datasets of different data sizes and distributions, allowing it to simulate various incoming data sizes and changing patterns.
+
+### 3.2 Annotation process
+
+<!-- This section describes the annotation process such as annotation tools used in the process, the amount of data annotated, annotation guidelines provided to the annotators, interannotator statistics, annotation validation, etc. -->
+
+The annotation process combines automated transformation with manual validation to ensure the accuracy and functional equivalence of SQL translations. 
+
+First, SQL queries from various benchmarks and real-world services are anonymized at the entity, field, and query levels to remove sensitive information while preserving structure.
+Next, candidate translations are generated using a combination of rule-based translation tools and LLM-assisted methods. 
+Each translation is then manually reviewed and, if necessary, corrected by experienced annotators to ensure that it adheres to the syntax of the target dialect and preserves the semantics of the source query.
+Finally, all annotated pairs are validated through execution tests (when applicable) and heuristic checks to confirm correctness across dialects.
+
+## 📖 4. Citation
+
+<!-- If there is a paper or blog post introducing the dataset, the APA and Bibtex information for that should go in this section. -->
+
+If you like this project, please cite our paper:
+
+```
+@article{zhou2025cracksql,
+  author       = {Wei Zhou and
+                  Yuyang Gao and
+                  Xuanhe Zhou and
+                  Guoliang Li},
+  title        = {{Cracking SQL Barriers:} {An}  LLM-based Dialect Transaltion System},
+  journal      = {Proc. {ACM} Manag. Data},
+  volume       = {3},
+  number       = {3 (SIGMOD)},
+  year         = {2025}
+}
+
+@article{zhou2025cracksqldemo,
+  author       = {Wei Zhou and
+                  Yuyang Gao and
+                  Xuanhe Zhou and
+                  Guoliang Li},
+  title        = {CrackSQL: A Hybrid SQL Dialect Translation System Powered by Large Language Models},
+  journal      = {arXiv Preprint},
+  url       = {https://arxiv.org/abs/2504.00882},
+  year         = {2025}
+}
+```
+
+## 📞 5. Dataset Card Contact
+
+If you have any issue, please contact `weizhoudb@sjtu.edu.cn`.
