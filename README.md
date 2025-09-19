@@ -10,6 +10,12 @@
 
 ![PARROT Overview](./parrot-website-logo.png)
 
+<p align="center">
+  <!-- <a href="#-features">Features</a> • -->
+  <a href="https://code4db.github.io/parrot-bench/">LeaderBoard</a>
+</p>
+
+
 PARROT (**P**ractical **A**nd **R**ealistic Benchma**R**k for Cr**O**ss-System SQL **T**ranslation) was created to support the task of Cross-System SQL Translation (i.e., SQL-to-SQL translation), 
 which involves adapting a query written for one database system into its functionally equivalent form for another. 
 The main dataset comprises 598 translation pairs from 38 open-source benchmarks and real-world business services, 
