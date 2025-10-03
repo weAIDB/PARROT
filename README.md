@@ -146,18 +146,6 @@ If you like this project, please cite our paper:
   year         = {2025}
 }
 
-@article{,
-  author       = {Wei Zhou and
-                  Yuyang Gao and
-                  Xuanhe Zhou and
-                  Guoliang Li},
-  title        = {{Cracking SQL Barriers:} {An}  LLM-based Dialect Transaltion System},
-  journal      = {Proc. {ACM} Manag. Data},
-  volume       = {3},
-  number       = {3 (SIGMOD)},
-  year         = {2025}
-}
-
 @article{zhou2025cracksql,
   author       = {Wei Zhou and
                   Yuyang Gao and
