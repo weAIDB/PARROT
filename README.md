@@ -61,22 +61,9 @@
 
 ### Submission Process
 
-<<<<<<< HEAD
 1. **📋 Prepare Outputs**
    - Follow the example in `Submission_Example/20250928_LLMTranslator_ExampleTeam.zip`
    - Ensure proper folder structure and file formats
-=======
-<p align="center">
-  <!-- <a href="#-features">Features</a> • -->
-  <a href="https://code4db.github.io/parrot-bench/">LeaderBoard</a>
-</p>
-
-
-PARROT (**P**ractical **A**nd **R**ealistic Benchma**R**k for Cr**O**ss-System SQL **T**ranslation) was created to support the task of Cross-System SQL Translation (i.e., SQL-to-SQL translation), 
-which involves adapting a query written for one database system into its functionally equivalent form for another. 
-The main dataset comprises 598 translation pairs from 38 open-source benchmarks and real-world business services, 
-specifically prepared to challenge system-specific SQL understanding.
->>>>>>> 485472502867a40135c4b730db669e9407ba04b3
 
 2. **📖 Read Guidelines**
    - Review `Submission_Example/PARROT Submission Guidelines.md`
@@ -270,23 +257,6 @@ If you use PARROT in your research, please cite:
   year         = {2025}
 }
 
-<<<<<<< HEAD
-=======
-```
-@inproceedings{zhou2025parrot,
-  author       = {Wei Zhou and
-                  Guoliang Li and
-                  Haoyu Wang and
-                  Yuxing Han and
-                  Xufei Wu and
-                  Fan Wu and
-                  Xuanhe Zhou},
-  title        = {PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation},
-  booktitle    = {NeurIPS},
-  year         = {2025}
-}
-
->>>>>>> 485472502867a40135c4b730db669e9407ba04b3
 @article{zhou2025cracksql,
   author       = {Wei Zhou and Yuyang Gao and Xuanhe Zhou and Guoliang Li},
   title        = {Cracking SQL Barriers: An LLM-based Dialect Translation System},
@@ -343,8 +313,4 @@ This project is released under the **MIT License**. See `LICENSE` file for detai
 
 **⭐ Star us on GitHub if you find this project useful!**
 
-<<<<<<< HEAD
 </div>
-=======
-If you have any issue, please contact `weizhoudb@sjtu.edu.cn`.
->>>>>>> 485472502867a40135c4b730db669e9407ba04b3
