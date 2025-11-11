@@ -1,36 +1,188 @@
----
-# For reference on dataset card metadata, see the spec: https://github.com/huggingface/hub-docs/blob/main/datasetcard.md?plain=1
-# Doc / guide: https://huggingface.co/docs/hub/datasets-cards
-{}
----
+<div align="center">
 
 # 🦜 PARROT
 
-<!-- Provide a quick summary of the dataset. -->
+**Practical And Realistic BenchmaRk for crOss-system SQL Translation**
 
-![PARROT Overview](./parrot-website-logo.png)
+[![Leaderboard](https://img.shields.io/badge/🏆_Leaderboard-Live-orange?style=for-the-badge)](https://code4db.github.io/parrot-bench/)
+[![Samples](https://img.shields.io/badge/Samples-598-blue?style=for-the-badge&logo=sql&logoColor=white)](https://code4db.github.io/parrot-bench/)
+[![Dialects](https://img.shields.io/badge/Dialects-10+-purple?style=for-the-badge&logo=database&logoColor=white)](https://code4db.github.io/parrot-bench/)
+[![Python](https://img.shields.io/badge/Python-3.9+-green?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)](LICENSE)
 
-PARROT (**P**ractical **A**nd **R**ealistic Benchma**R**k for Cr**O**ss-System SQL **T**ranslation) was created to support the task of Cross-System SQL Translation (i.e., SQL-to-SQL translation), 
-which involves adapting a query written for one database system into its functionally equivalent form for another. 
-The main dataset comprises 598 translation pairs from 38 open-source benchmarks and real-world business services, 
-specifically prepared to challenge system-specific SQL understanding.
+<img src="./parrot-website-logo.png" alt="PARROT" width="400" />
 
-## 📂 1. Dataset Details
+**The first comprehensive benchmark for evaluating cross-system SQL translation systems**
 
-### 1.1 Dataset Description
+[Leaderboard](https://code4db.github.io/parrot-bench/) • [Documentation](#-benchmark-contents) • [Submit Results](#-submissions) • [Paper](#-citation)
 
-<!-- Provide a longer summary of what this dataset is. -->
+---
 
-- **Curated by:** Shanghai Jiao Tong University, Tsinghua University, and Bytedance Team.
-- **Language(s) (NLP):** Different dialects with SQL adhering to the standards of PostgreSQL, Oracle, MySQL etc.
-- **License:** This project is released under the MIT license. 
+</div>
 
-### 1.2 Dataset Sources
+## 📢 News
+> - **09/2025:** Our paper "PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation" has been accepted by [NeurIPS 2025](https://neurips.cc/virtual/2025/loc/san-diego/poster/121388)! :tada: :tada: :tada:
+> - **05/2025:** We have released PARROT-1.0 (28,003 translation pairs from 38 open-source benchmarks for extensive syntax testing) and published the leaderboard.
 
-<!-- Provide the basic links for the dataset. -->
+---
 
-PARROT is constructed based on a collection of open-source SQL-related benchmarks and workloads from real world business service.
-The following table presents the details of the collected open-source benchmarks in PARROT, highlighting their sources, dialect coverage, and key statistics.
+## ✨ Key Features
+
+<img src="./parrot-poster-white.png" alt="PARROT" />
+
+<div align="center">
+
+| 🎯 **Comprehensive** | 🔧 **Production-Ready** | 🧪 **Well-Tested** | 🌐 **Multi-Dialect** |
+|:---:|:---:|:---:|:---:|
+| 598 curated pairs from 38+ benchmarks | Real-world workloads & production data | Built-in validators & parsers | 10+ SQL dialects supported |
+
+</div>
+
+### 🌟 Why PARROT?
+
+- ✅ **598 Translation Pairs** from 38+ public benchmarks and production-derived workloads
+- 🧠 **Broad Dialect Coverage**: PostgreSQL, MySQL, SQLite, Oracle, SQL Server, Db2, DuckDB, Trino, Hive, Snowflake, and more
+- 🧪 **Built-in Validators**: Comprehensive parsers and executability checks for multiple engines
+- 🛠️ **Complete Toolkit**: Preprocessing utilities and baseline translation tools included
+- 📊 **Rigorous Evaluation**: Multi-dimensional scoring (syntax and execution)
+- 🏆 **Live Leaderboard**: Track your progress and compete with the community
+
+---
+
+## 📤 Submissions
+
+<div align="center">
+
+### 🏆 Ready to compete? Submit your system now!
+
+[![Submit](https://img.shields.io/badge/Submit_Your_System-FF6F3D?style=for-the-badge&logo=rocket&logoColor=white)](https://code4db.github.io/parrot-bench/)
+
+</div>
+
+### Submission Process
+
+1. **📋 Prepare Outputs**
+   - Follow the example in `Submission_Example/20250928_LLMTranslator_ExampleTeam.zip`
+   - Ensure proper folder structure and file formats
+
+2. **📖 Read Guidelines**
+   - Review `Submission_Example/PARROT Submission Guidelines.md`
+   - Check format requirements and naming conventions
+
+3. **📝 Include System Description**
+   - Approach and methodology
+   - Models and versions used
+   - Rules and heuristics applied
+   - Training data sources
+   - Compute resources
+
+4. **🚀 Submit**
+   - Upload via the leaderboard site
+   - Wait for evaluation results
+
+### 📋 Requirements Checklist
+
+- [ ] Consistent model versions and random seeds
+- [ ] Clear indication of supported dialect pairs
+- [ ] Valid UTF-8 text file outputs
+- [ ] Exact versions of LLM prompts/rule files included
+- [ ] System description document included
+- [ ] Reproducibility instructions provided
+
+> ⚠️ **Important**: Include exact versions of all dependencies, prompts, and rule files for reproducibility.
+
+---
+
+## 🏁 Leaderboard Rules
+
+<div align="center">
+
+| Rule | Description |
+|:-----|:-----------|
+| ⏱️ **Frequency** | One submission per team per month (TBD) |
+| 📝 **Transparency** | Disclose all training data and public resources |
+| 🏷️ **Documentation** | Clearly mark manual rules or prompts |
+| 🚫 **Fairness** | No test set contamination or hand-tuning |
+| ✅ **Verification** | Results may be verified; additional materials may be requested |
+
+</div>
+
+---
+
+## 🧱 Baselines
+
+We recommend to refer to an LLM-based baseline [CrackSQL](https://github.com/weAIDB/CrackSQL).
+> CrackSQL is a powerful SQL dialect translation tool that integrates rule-based strategies with LLMs for high accuracy. It enables seamless conversion between dialects (e.g., PostgreSQL → MySQL) with flexible access through Python API, command line, and web interface.
+
+---
+
+## 🧪 Task Definition
+
+**Goal**: Translate SQL from one database dialect to another while preserving semantic equivalence.
+
+```
+Input:  (source_dialect, target_dialect, source_sql)
+Output: target_sql
+```
+
+### Example
+
+```sql
+-- Source (PostgreSQL)
+SELECT EXTRACT(YEAR FROM created_at) AS year, COUNT(*) 
+FROM users 
+WHERE age > 25 
+GROUP BY EXTRACT(YEAR FROM created_at);
+
+-- Target (MySQL)
+SELECT YEAR(created_at) AS year, COUNT(*) 
+FROM users 
+WHERE age > 25 
+GROUP BY YEAR(created_at);
+```
+
+---
+
+## 📊 Benchmark Statistics
+
+<div align="center">
+
+| Metric | Count |
+|:------|:-----:|
+| **Translation Pairs** | 598 |
+| **Source Benchmarks** | 38+ |
+| **SQL Dialects** | 10+ |
+| **Supported Engines** | 15+ |
+| **Domain Types** | Single & Cross-domain |
+
+</div>
+
+---
+
+## 📦 Benchmark Contents
+
+```
+PARROT/
+├── 📁 benchmark/          # Source datasets from 38+ benchmarks
+│   ├── Spider/           # Cross-domain SQL queries
+│   ├── SParC/            # Multi-turn conversations
+│   ├── BIRD/             # Complex real-world queries
+│   ├── TPC-H FROID/      # UDF-heavy workloads
+│   └── ...               # 34+ more benchmarks
+├── 🔍 validator/         # Grammar parsers & validators
+│   ├── pg_parser/        # PostgreSQL parser
+│   ├── mysql_parser/     # MySQL parser
+│   ├── oracle_parser/    # Oracle parser
+│   └── ...               # 10+ more dialect parsers
+├── ⚙️ processor/         # Preprocessing utilities
+├── 🔄 translator/        # Baseline translation tools
+└── 📤 Submission_Example/ # Submission templates
+```
+
+### Supported Benchmarks
+
+<details>
+<summary><b>View all 38+ benchmarks</b></summary>
 
 | Benchmark         | Year | SQL Dialects       | Language          | Domain Type      | Turn Round    | Collection            |
 |-------------------|:------:|:------------------------------:|:-------------------:|:------------------:|:---------:|:-----------------------:|
@@ -77,80 +229,88 @@ The following table presents the details of the collected open-source benchmarks
 
 † **Hybrid** means the dataset was created using both automatic generation and manual annotation.
 
-## ⚙️ 2. Uses
 
-<!-- Address questions around how the dataset is intended to be used. -->
+</details>
 
-### 2.1 Direct Use
+---
 
-<!-- This section describes suitable use cases for the dataset. -->
+## 🧮 Evaluation & Scoring
 
-PARROT supports direct in various manners.
-Below, we showcase how to load it with `datasets` library.
+PARROT evaluates systems across **four key dimensions**:
 
-```
-from datasets import load_dataset
+| Dimension | Description |
+|:----------|:------------|
+| **🔍 Syntax Validity** | Can the SQL be parsed by the target dialect? |
+| **⚡ Execution Checks** | Result equivalence when data available |
 
-# Login using e.g. `huggingface-cli login` to access this dataset
-ds = load_dataset("weizhoudb/PARROT")
-```
+---
 
-## 🧩 3. Dataset Creation
+## 📚 Citation
 
-### 3.1 Curation Rationale
+If you use PARROT in your research, please cite:
 
-<!-- Motivation for the creation of this dataset. -->
+```bibtex
+@inproceedings{zhou2025parrot,
+  author       = {Wei Zhou and Guoliang Li and Haoyu Wang and Yuxing Han and Xufei Wu and Fan Wu and Xuanhe Zhou},
+  title        = {PARROT: A Benchmark for Evaluating LLMs in Cross-System SQL Translation},
+  booktitle    = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year         = {2025}
+}
 
-PARROT intends to construct a realistic and challenging benchmark for evaluating cross-dialect SQL translation. 
-The collected queries pass through a rigorous curation pipeline that retains only those queries satisfying Jim Gray’s four benchmark design principles.
-
-- **(1) Relevance:** PARROT covers a wide range of cross-system SQL translation cases, including different operator complexities. 
-- **(2) Simplicity:** PARROT is designed to eliminate redundant SQLs and be easily understandable.
-- **(3) Portability:** PARROT is applicable to different translation scenarios (e.g., with different source / target data systems).
-- **(4) Scalability:** PARROT includes real datasets of different data sizes and distributions, allowing it to simulate various incoming data sizes and changing patterns.
-
-### 3.2 Annotation process
-
-<!-- This section describes the annotation process such as annotation tools used in the process, the amount of data annotated, annotation guidelines provided to the annotators, interannotator statistics, annotation validation, etc. -->
-
-The annotation process combines automated transformation with manual validation to ensure the accuracy and functional equivalence of SQL translations. 
-
-First, SQL queries from various benchmarks and real-world services are anonymized at the entity, field, and query levels to remove sensitive information while preserving structure.
-Next, candidate translations are generated using a combination of rule-based translation tools and LLM-assisted methods. 
-Each translation is then manually reviewed and, if necessary, corrected by experienced annotators to ensure that it adheres to the syntax of the target dialect and preserves the semantics of the source query.
-Finally, all annotated pairs are validated through execution tests (when applicable) and heuristic checks to confirm correctness across dialects.
-
-## 📖 4. Citation
-
-<!-- If there is a paper or blog post introducing the dataset, the APA and Bibtex information for that should go in this section. -->
-
-If you like this project, please cite our paper:
-
-```
 @article{zhou2025cracksql,
-  author       = {Wei Zhou and
-                  Yuyang Gao and
-                  Xuanhe Zhou and
-                  Guoliang Li},
-  title        = {{Cracking SQL Barriers:} {An}  LLM-based Dialect Transaltion System},
-  journal      = {Proc. {ACM} Manag. Data},
+  author       = {Wei Zhou and Yuyang Gao and Xuanhe Zhou and Guoliang Li},
+  title        = {Cracking SQL Barriers: An LLM-based Dialect Translation System},
+  journal      = {Proceedings of the ACM on Management of Data},
   volume       = {3},
   number       = {3 (SIGMOD)},
   year         = {2025}
 }
 
 @article{zhou2025cracksqldemo,
-  author       = {Wei Zhou and
-                  Yuyang Gao and
-                  Xuanhe Zhou and
-                  Guoliang Li},
+  author       = {Wei Zhou and Yuyang Gao and Xuanhe Zhou and Guoliang Li},
   title        = {CrackSQL: A Hybrid SQL Dialect Translation System Powered by Large Language Models},
   journal      = {arXiv Preprint},
-  url       = {https://arxiv.org/abs/2504.00882},
+  url          = {https://arxiv.org/abs/2504.00882},
   year         = {2025}
 }
 ```
 
-## 📞 5. Dataset Card Contact
+---
 
-If you have any issue, please contact `weizhoudb@sjtu.edu.cn`.
+## 📄 License
+
+This project is released under the **MIT License**. See `LICENSE` file for details.
+
+---
+
+## 📬 Contact & Support
+
+<div align="center">
+
+**Questions? Feedback? Want to submit?**
+
+📧 **Email**: [`weizhoudb@sjtu.edu.cn`](mailto:weizhoudb@sjtu.edu.cn)
+
+💬 **Contributions**: Issues and PRs are welcome!
+
+</div>
+
+---
+
+## 🙏 Acknowledgments
+
+<div align="center">
+
+**Made with ❤️ by**
+
+**Shanghai Jiao Tong University** • **Tsinghua University** • **Bytedance Team**
+
+---
+
+[![Star](https://img.shields.io/github/stars/weAIDB/PARROT?style=social)](https://github.com/weAIDB/PARROT)
+[![Fork](https://img.shields.io/github/forks/weAIDB/PARROT?style=social)](https://github.com/weAIDB/PARROT)
+[![Watch](https://img.shields.io/github/watchers/weAIDB/PARROT?style=social)](https://github.com/weAIDB/PARROT)
+
+**⭐ Star us on GitHub if you find this project useful!**
+
+</div>
